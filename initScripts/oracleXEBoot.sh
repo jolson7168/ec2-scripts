@@ -36,6 +36,8 @@ chown oracle:oinstall /home/oracle/.ssh/authorized_keys
 chown oracle:oinstall /u01
 mkdir /u01/download
 chown oracle:oinstall /u01/download
+mkdir /u01/git
+chown oracle:oinstall /u01/git
 
 #install stuff
 yum update --assumeyes
@@ -59,6 +61,7 @@ yum install make-3.* --assumeyes
 yum install sysstat-7.* --assumeyes
 yum install unixODBC-2.* --assumeyes
 yum install unixODBC-devel-2.* --assumeyes
+yum install git-core --assumeyes
 
 #Change /etc/sysctl.conf
 echo '# Added by Oracle...' >>/etc/sysctl.conf
@@ -84,4 +87,10 @@ echo 'oracle          soft     stack           10240' >> /etc/security/limits.co
 
 /sbin/sysctl -p
 
+#Load source onto machine
+mkdir /u01/git/geocoder
+chown oracle:oinstall /u01/git/geocoder
+git clone https://github.com/jolson7168/geocoder.git /u01/git/geocoder
+
+git clone 
 
