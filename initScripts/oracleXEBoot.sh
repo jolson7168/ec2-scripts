@@ -7,7 +7,12 @@ mkdir /u01
 mount /dev/sdf /u01
 echo '/dev/sdf    /u01      auto    defaults,noatime 0  0' >>/etc/fstab
 
-#increase swap space
+#create swap space
+dd if=/dev/zero of=/home/swapfile bs=1024 count=2097152
+swapon /home/swapfile
+chown root:root /home/swapfile
+chmod 0600 /home/swapfile
+echo '/home/swapfile    swap      swap    defaults         0  0' >>/etc/fstab
 
 
 #set hostname
@@ -33,11 +38,15 @@ mkdir /home/oracle/.ssh
 chown oracle:oinstall /home/oracle/.ssh
 cp /home/ec2-user/.ssh/authorized_keys /home/oracle/.ssh/authorized_keys
 chown oracle:oinstall /home/oracle/.ssh/authorized_keys
+
+#Make some directories
 chown oracle:oinstall /u01
 mkdir /u01/download
 chown oracle:oinstall /u01/download
 mkdir /u01/git
 chown oracle:oinstall /u01/git
+mkdir /u01/logs
+chown oracle:oinstall /u01/logs
 
 #install stuff
 yum update --assumeyes
@@ -91,6 +100,10 @@ echo 'oracle          soft     stack           10240' >> /etc/security/limits.co
 mkdir /u01/git/geocoder
 chown oracle:oinstall /u01/git/geocoder
 git clone https://github.com/jolson7168/geocoder.git /u01/git/geocoder
+chown -R oracle:oinstall /u01/git/geocoder
+mkdir /u01/git/oracle
+chown oracle:oinstall /u01/git/oracle
+git clone https://github.com/jolson7168/oracle.git /u01/git/oracle
+chown -R oracle:oinstall /u01/git/oracle
 
-git clone 
 
