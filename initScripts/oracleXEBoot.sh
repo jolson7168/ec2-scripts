@@ -73,6 +73,7 @@ yum install sysstat-7.* --assumeyes
 yum install unixODBC-2.* --assumeyes
 yum install unixODBC-devel-2.* --assumeyes
 yum install git-core --assumeyes
+yum install mlocate --assumeyes
 
 #Change /etc/sysctl.conf
 echo '# Added by Oracle...' >>/etc/sysctl.conf
@@ -108,3 +109,8 @@ chown oracle:oinstall /u01/git/oracle
 git clone https://github.com/jolson7168/oracle.git /u01/git/oracle
 chown -R oracle:oinstall /u01/git/oracle
 chmod +x /u01/git/oracle/scripts/installXEinstall.sh
+
+#Get some external data
+wget -O /u01/download/allCountries.zip http://download.geonames.org/export/dump/allCountries.zip
+unzip /u01/download/allCountries.zip -d /u01/download
+chown oracle:oinstall /u01/download/allCountries.txt
