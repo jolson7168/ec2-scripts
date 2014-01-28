@@ -9,6 +9,7 @@ echo '/dev/sdf    /u01      auto    defaults,noatime 0  0' >>/etc/fstab
 
 #create swap space
 dd if=/dev/zero of=/home/swapfile bs=1024 count=2097152
+mkswap /home/swapfile
 swapon /home/swapfile
 chown root:root /home/swapfile
 chmod 0600 /home/swapfile
@@ -34,6 +35,7 @@ echo 127.0.0.1 localhost localhost.localdomain ec2oracleEx ec2oracleEx.local > /
 groupadd oinstall
 groupadd dba
 useradd -g oinstall -G dba,oinstall oracle
+adduser oracle sudo
 mkdir /home/oracle/.ssh
 chown oracle:oinstall /home/oracle/.ssh
 cp /home/ec2-user/.ssh/authorized_keys /home/oracle/.ssh/authorized_keys
@@ -105,5 +107,4 @@ mkdir /u01/git/oracle
 chown oracle:oinstall /u01/git/oracle
 git clone https://github.com/jolson7168/oracle.git /u01/git/oracle
 chown -R oracle:oinstall /u01/git/oracle
-
-
+chmod +x /u01/git/oracle/scripts/installXEinstall.sh
