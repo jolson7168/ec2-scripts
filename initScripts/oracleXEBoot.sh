@@ -49,6 +49,10 @@ mkdir /u01/git
 chown oracle:oinstall /u01/git
 mkdir /u01/logs
 chown oracle:oinstall /u01/logs
+mkdir /u01/oradata
+chown oracle:oinstall /u01/oradata
+mkdir /u01/oradata/xe
+chown oracle:oinstall /u01/oradata/xe
 
 #install stuff
 yum update --assumeyes
