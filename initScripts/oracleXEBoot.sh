@@ -45,6 +45,8 @@ chown oracle:oinstall /home/oracle/.ssh/authorized_keys
 chown oracle:oinstall /u01
 mkdir /u01/download
 chown oracle:oinstall /u01/download
+mkdir /u01/download/json
+chown oracle:oinstall /u01/download/json
 mkdir /u01/git
 chown oracle:oinstall /u01/git
 mkdir /u01/logs
@@ -78,6 +80,8 @@ yum install unixODBC-2.* --assumeyes
 yum install unixODBC-devel-2.* --assumeyes
 yum install git-core --assumeyes
 yum install mlocate --assumeyes
+yum install readline-devel --assumeyes
+yum install rlwrap --enablerepo=epel --assumeyes
 
 #Change /etc/sysctl.conf
 echo '# Added by Oracle...' >>/etc/sysctl.conf
@@ -118,3 +122,9 @@ chmod +x /u01/git/oracle/scripts/installXEinstall.sh
 wget -O /u01/download/allCountries.zip http://download.geonames.org/export/dump/allCountries.zip
 unzip /u01/download/allCountries.zip -d /u01/download
 chown oracle:oinstall /u01/download/allCountries.txt
+
+wget -O /u01/download/json/json_lib.zip http://sourceforge.net/projects/pljson/files/latest/downloads
+unzip /u01/download/json/json_lib.zip -d /u01/download/json
+chown -R oracle:oinstall /u01/download/json
+
+
