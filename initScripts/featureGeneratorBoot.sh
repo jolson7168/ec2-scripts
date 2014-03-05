@@ -25,5 +25,4 @@ chown -R ec2-user:ec2-user /home/ec2-user/git
 export ip=`ifconfig | awk -F':' '/inet addr/&&!/127.0.0.1/{split($2,_," ");print _[1]}'`
 export offset=`echo $ip|cut -d'.' -f4`
 sed -i "0,/submitId=101/s//submitId=$offset/" /home/ec2-user/git/timeseries_redis/config/loadFeatureData.conf
-cd /home/ec2-user/git/timeseries_redis/scripts
-loadData.sh&
+(cd /home/ec2-user/git/timeseries_redis/scripts/ && ./loadData.sh&)
