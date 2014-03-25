@@ -51,6 +51,8 @@ yum install readline-devel --assumeyes
 yum install rlwrap --enablerepo=epel --assumeyes
 #yum install git-core --assumeyes
 
+sysctl -w fs.file-max=100032
+
 wget -O /u01/download/redis-2.8.7.tar.gz http://download.redis.io/releases/redis-2.8.7.tar.gz
 tar -xzf /u01/download/redis-2.8.7.tar.gz -C /u01/download
 make -C /u01/download/redis-2.8.7
@@ -60,8 +62,12 @@ chown -R ec2-user:ec2-user /u01
 /u01/download/redis-2.8.7/src/redis-server /u01/download/redis-2.8.7/redis.conf >/u01/logs/redis.log &
 chown ec2-user:ec2-user /u01/logs/redis.log
 
-cp /u01/download/redis-2.8.7/sentinel.conf /u01/download/redis-2.8.7/mysentinel.conf
-sed -i "s/127.0.0.1/`/sbin/ifconfig eth0 | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`/g" /u01/download/redis-2.8.7/mysentinel.conf
+echo port 26379 >/u01/download/redis-2.8.7/mysentinel.conf
+echo sentinel monitor master01 10.0.141.55 6379 2 >>/u01/download/redis-2.8.7/mysentinel.conf
+echo sentinel down-after-milliseconds master01 10000 >>/u01/download/redis-2.8.7/mysentinel.conf
+echo sentinel parallel-syncs master01 5 >>/u01/download/redis-2.8.7/mysentinel.conf
+echo sentinel config-epoch master01 1 >>/u01/download/redis-2.8.7/mysentinel.conf
+
 chown ec2-user:ec2-user /u01/download/redis-2.8.7/mysentinel.conf
 /u01/download/redis-2.8.7/src/redis-sentinel /u01/download/redis-2.8.7/mysentinel.conf >/u01/logs/sentinel.log &
 chown ec2-user:ec2-user /u01/logs/sentinel.log
