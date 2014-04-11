@@ -24,9 +24,6 @@ mkdir /u01/download
 chown ec2-user:ec2-user /u01/download
 mkdir /u01/logs
 chown ec2-user:ec2-user /u01/logs
-#mkdir /u01/git
-#chown ec2-user:ec2-user /u01/git
-
 
 #install stuff
 yum update --assumeyes
@@ -49,18 +46,8 @@ yum install libstdc++-devel-4.* --assumeyes
 yum install mlocate --assumeyes
 yum install readline-devel --assumeyes
 yum install rlwrap --enablerepo=epel --assumeyes
-#yum install git-core --assumeyes
 
-wget -O /u01/download/redis-2.8.4.tar.gz http://download.redis.io/releases/redis-2.8.4.tar.gz
-tar -xzf /u01/download/redis-2.8.4.tar.gz -C /u01/download
-make -C /u01/download/redis-2.8.4
-
-/u01/download/redis-2.8.4/src/redis-server &
-
-#git clone https://github.com/jolson7168/pythonlibs.git /u01/git
-#echo 'export PYTHONPATH=/u01/git/pythonlibs' >>/home/ec2-user/.bashrc
-#chown ec2-user:ec2-user /home/ec2-user/.bashrc
-
-
-
-
+wget -O /u01/download/redis-2.8.7.tar.gz http://download.redis.io/releases/redis-2.8.7.tar.gz
+tar -xzf /u01/download/redis-2.8.7.tar.gz -C /u01/download
+make -C /u01/download/redis-2.8.7
+/u01/download/redis-2.8.7/src/redis-server /u01/download/redis-2.8.7/redis.conf >/u01/logs/redis.log &

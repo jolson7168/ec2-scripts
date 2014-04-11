@@ -70,4 +70,8 @@ chown ec2-user:ec2-user /u01/download/redis-2.8.7/mysentinel.conf
 /u01/download/redis-2.8.7/src/redis-sentinel /u01/download/redis-2.8.7/mysentinel.conf >/u01/logs/sentinel.log &
 chown ec2-user:ec2-user /u01/logs/sentinel.log
 
+echo "/u01/download/redis-2.8.7/src/redis-cli" >/home/ec2-user/redis-cli.sh
+chown ec2-user:ec2-user /home/ec2-user/redis-cli.sh
+chmod +x /home/ec2-user/redis-cli.sh
+
 
