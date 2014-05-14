@@ -56,6 +56,8 @@ chown oracle:oinstall /u01/oradata
 mkdir /u01/oradata/xe
 chown oracle:oinstall /u01/oradata/xe
 
+#Change Hostname from amazon to oracle.local???
+
 #install stuff
 yum update --assumeyes
 yum install binutils-2.* --assumeyes
@@ -71,11 +73,11 @@ yum install glibc-headers-2.* --assumeyes
 yum install ksh-2* --assumeyes
 yum install libaio-0.* --assumeyes
 yum install libaio-devel-0.* --assumeyes
-yum install libgcc-4.* --assumeyes
-yum install libstdc++-4.* --assumeyes
-yum install libstdc++-devel-4.* --assumeyes
+yum install libgcc --assumeyes
+yum install libstdc++ --assumeyes
+yum install libstdc++-devel --assumeyes
 yum install make-3.* --assumeyes
-yum install sysstat-7.* --assumeyes
+yum install sysstat --assumeyes	
 yum install unixODBC-2.* --assumeyes
 yum install unixODBC-devel-2.* --assumeyes
 yum install git-core --assumeyes
@@ -108,23 +110,23 @@ echo 'oracle          soft     stack           10240' >> /etc/security/limits.co
 /sbin/sysctl -p
 
 #Load source onto machine
-mkdir /u01/git/geocoder
-chown oracle:oinstall /u01/git/geocoder
-git clone https://github.com/jolson7168/geocoder.git /u01/git/geocoder
-chown -R oracle:oinstall /u01/git/geocoder
+#mkdir /u01/git/geocoder
+#chown oracle:oinstall /u01/git/geocoder
+#git clone https://github.com/jolson7168/geocoder.git /u01/git/geocoder
+#chown -R oracle:oinstall /u01/git/geocoder
 mkdir /u01/git/oracle
 chown oracle:oinstall /u01/git/oracle
 git clone https://github.com/jolson7168/oracle.git /u01/git/oracle
 chown -R oracle:oinstall /u01/git/oracle
-chmod +x /u01/git/oracle/scripts/installXEinstall.sh
+chmod +x /u01/git/oracle/scripts/install/XEinstall.sh
 
 #Get some external data
-wget -O /u01/download/allCountries.zip http://download.geonames.org/export/dump/allCountries.zip
-unzip /u01/download/allCountries.zip -d /u01/download
-chown oracle:oinstall /u01/download/allCountries.txt
+#wget -O /u01/download/allCountries.zip http://download.geonames.org/export/dump/allCountries.zip
+#unzip /u01/download/allCountries.zip -d /u01/download
+#chown oracle:oinstall /u01/download/allCountries.txt
 
-wget -O /u01/download/json/json_lib.zip http://sourceforge.net/projects/pljson/files/latest/downloads
-unzip /u01/download/json/json_lib.zip -d /u01/download/json
-chown -R oracle:oinstall /u01/download/json
+#wget -O /u01/download/json/json_lib.zip http://sourceforge.net/projects/pljson/files/latest/downloads
+#unzip /u01/download/json/json_lib.zip -d /u01/download/json
+#chown -R oracle:oinstall /u01/download/json
 
 
