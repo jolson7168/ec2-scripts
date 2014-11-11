@@ -10,3 +10,5 @@ chown -R ec2-user:ec2-user /home/ec2-user/git
 Rscript /home/ec2-user/git/weibull/scripts/init.R >/home/ec2-user/r.out
 git clone https://github.com/jolson7168/rservice.git /home/ec2-user/git/rservice
 chown -R ec2-user:ec2-user /home/ec2-user/git/rservice
+#Start the service
+Rscript /home/ec2-user/git/weibull/src/listener.R > /home/ec2-user/git/weibull/scripts/r.out &
