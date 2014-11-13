@@ -6,3 +6,4 @@ pip install flask
 mkdir /home/ec2-user/git
 git clone https://github.com/jolson7168/CarbonCalculator.git /home/ec2-user/git/CarbonCalculator
 chown -R ec2-user:ec2-user /home/ec2-user/git
+/home/ec2-user/git/CarbonCalculator/scripts/CarbonCalculator.sh > /home/ec2-user/git/CarbonCalculator/scripts/cc.out &
