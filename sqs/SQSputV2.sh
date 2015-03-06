@@ -32,7 +32,7 @@ SignatureMethod=HmacSHA256
 SignatureVersion=2
 Version=2012-11-05
 
-MessageBodyEncoded=`python -c "import sys, urllib as ul; print ul.quote('$MessageBody')"`
+MessageBodyEncoded=`python -c "import sys, urllib as ul; print ul.quote('$MessageBody','')"`
 encodestring=$httpaction"\n"$url"\n""/"$account"/"$qname"\n""AWSAccessKeyId="$AWSAccessKeyId"&Action="$Action"&Expires="$EExpires"&MessageBody="$MessageBodyEncoded"&SignatureMethod="$SignatureMethod"&SignatureVersion="$SignatureVersion"&Version="$Version
 
 b64=`echo -ne $encodestring |openssl sha256 -hmac $hmac -binary|base64`
