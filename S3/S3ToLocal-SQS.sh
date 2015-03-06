@@ -37,21 +37,29 @@ read_dom () {
 }
 
 request=`../sqs/SQSgetV2.sh $account $qname $url $hmac $AWSAccessKeyId`
-echo $request
-while [ -n "$request" ]; do
-
-	xml=`curl $request`
-
-	while read_dom; do
-	    if [[ $ENTITY = "Body" ]] ; then
-		filename=http://${CONTENT//://}
-		wget -P $localdir/ $filename
-		IFS='/' read -ra ADDR <<< "$filename"
-		for i in "${ADDR[@]}"; do
-			fname2="$i"
-		done
-		unzip $localdir/$fname2 -d $localdir
-    	    fi
-	done <<< "$xml"
-	request=`../sqs/SQSgetV2.sh $account $qname $url $hmac $AWSAccessKeyId`
+xml=`curl $request`
+done=false
+while [ "$done" = false ]; do
+	if [[ $xml == *"<ReceiveMessageResult/>"* ]] ; then
+		 done=true
+	else
+		while read_dom; do
+		    if [[ $ENTITY = "Body" ]] ; then
+			filename=http://${CONTENT//://}
+			wget -P $localdir/ $filename
+			IFS='/' read -ra ADDR <<< "$filename"
+			for i in "${ADDR[@]}"; do
+				fname2="$i"
+			done
+			unzip $localdir/$fname2 -d $localdir
+	    	    fi
+		    if [[ $ENTITY = "ReceiptHandle" ]] ; then
+			handle=$CONTENT
+			deleterequest=`../sqs/SQSdeleteV2.sh $account $qname $url $hmac $AWSAccessKeyId $handle`
+			deleted=`curl $deleterequest`
+		    fi
+		done <<< "$xml"
+		request=`../sqs/SQSgetV2.sh $account $qname $url $hmac $AWSAccessKeyId`
+		xml=`curl $request`
+	fi
 done
