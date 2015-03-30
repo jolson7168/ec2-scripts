@@ -83,7 +83,9 @@ yum install unixODBC-devel-2.* --assumeyes
 yum install git-core --assumeyes
 yum install mlocate --assumeyes
 yum install readline-devel --assumeyes
+yum install unzip --assumeyes
 yum install rlwrap --enablerepo=epel --assumeyes
+yum install bc --assumeyes
 
 #Change /etc/sysctl.conf
 echo '# Added by Oracle...' >>/etc/sysctl.conf
