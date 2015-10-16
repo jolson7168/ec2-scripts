@@ -114,13 +114,9 @@ def writeRiak(action, fix):
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
-    print(fname)
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
-                print(fix)
-                print("---")
-                print(fix.replace("},","}"))
                 writeRiak("write", json.loads(fix.replace("},","}")))
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
@@ -144,7 +140,7 @@ def processFile(channel, method, properties, body):
     logger.info("Working: "+fileInfo["bucket"]+" "+fileInfo["filename"])
     thisFile = getFile(fileInfo["bucket"], fileInfo["filename"])
     unzipFile(thisFile)
-    toRiakIndividual(thisFile.replace(".zip",".json"))
+    toRiak(thisFile.replace(".zip",".json"))
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
 def configureMsgConsumer(server, queue_to_process, login, password, callback_func):
