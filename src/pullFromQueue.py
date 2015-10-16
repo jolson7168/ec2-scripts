@@ -242,10 +242,10 @@ def main(argv):
         elif opt in ("-q", "--queue"):
             queue=arg
 
-    toRiakIndividual('/tmp/20150212.json')
-#    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
- #   gChannel.start_consuming()
- #   gConnection.close()
+#    toRiakIndividual('/tmp/20150212.json')
+    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
+    gChannel.start_consuming()
+    gConnection.close()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
