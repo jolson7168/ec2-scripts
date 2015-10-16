@@ -116,7 +116,7 @@ def toRiak(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
     with open(fname) as data_file:    
-        fixes = json.load(data_file)
+        fixes = json.loads(data_file)
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file. Duration: "+str(duration))
     for fix in fixes["fixes"]:
