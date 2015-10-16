@@ -210,32 +210,31 @@ def main(argv):
     rightNow = time.strftime("%Y%m%d%H%M%S")
     logger = initLog(rightNow)
     riak = configureRiak("130.211.186.161", "8087")
-    toRiak("/tmp/20150211.json")
 
-#    try:
-#        opts, args = getopt.getopt(argv,"hslpq:",["server=","login=","password=","queue="])
-#    except getopt.GetoptError:
-#        print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
-#        sys.exit(2)
+    try:
+        opts, args = getopt.getopt(argv,"hslpq:",["server=","login=","password=","queue="])
+    except getopt.GetoptError:
+        print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
+        sys.exit(2)
 
-#    for opt, arg in opts:
-#        if opt == '-h':
-#            print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
-#            sys.exit()
-#        elif opt in ("-s", "--server"):
-#            server=arg
-#        elif opt in ("-l", "--login"):
-#            login=arg
-#        elif opt in ("-p", "--password"):
-#            password=arg
-#        elif opt in ("-q", "--queue"):
-#            queue=arg
+    for opt, arg in opts:
+        if opt == '-h':
+            print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
+            sys.exit()
+        elif opt in ("-s", "--server"):
+            server=arg
+        elif opt in ("-l", "--login"):
+            login=arg
+        elif opt in ("-p", "--password"):
+            password=arg
+        elif opt in ("-q", "--queue"):
+            queue=arg
 
-#    rightNow = time.strftime("%Y%m%d%H%M%S")
-#    logger = initLog(rightNow)
-#    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
-#    gChannel.start_consuming()
-#    gConnection.close()
+    rightNow = time.strftime("%Y%m%d%H%M%S")
+    logger = initLog(rightNow)
+    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
+    gChannel.start_consuming()
+    gConnection.close()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
