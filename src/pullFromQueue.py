@@ -243,8 +243,7 @@ def main(argv):
         elif opt in ("-q", "--queue"):
             queue=arg
 
-    rightNow = time.strftime("%Y%m%d%H%M%S")
-    logger = initLog(rightNow)
+#    toRiakIndividual('/tmp/20150212.json')
     gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
     gChannel.start_consuming()
     gConnection.close()
