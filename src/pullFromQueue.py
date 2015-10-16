@@ -115,8 +115,8 @@ def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
     with open(fname) as fixFile:
-        next(fixFile)
-        next(fixFile)    
+        fixFile.readline()
+        fixFile.readline()   
         for fix in fixFile:
             print(fix)
             print("------")
