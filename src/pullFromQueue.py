@@ -118,7 +118,10 @@ def toRiakIndividual(fname):
         next(fixFile)
         next(fixFile)    
         for fix in fixFile:
-            writeRiak("write", json.loads(fix.replace("},","}")))
+            fixed=fix.replace("},","}")
+            fixedJSON = json.loads(fix.replace("},","}"))
+            print(fixed)
+            writeRiak("write", fixedJSON)
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
     for fix in fixes["fixes"]:
