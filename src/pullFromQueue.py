@@ -113,14 +113,13 @@ def writeRiak(action, fix):
 
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
-    cnt = 0
     startTime = time.time()
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
                 writeRiak("write", json.loads(fix.replace("},","}")))
                 cnt = cnt + 1
-                if cnt % 500 == 0:
+                if (cnt % 500) == 0:
                     logger.info("Loaded "+str(cnt)+" fixes!")
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
@@ -130,6 +129,7 @@ def toRiakIndividual(fname):
 
 def toRiak(fname):
     logger = logging.getLogger("pullfromQueue")
+    cnt=0
     startTime = time.time()
     with open(fname) as data_file:
         fixes = json.load(data_file)
@@ -137,6 +137,9 @@ def toRiak(fname):
     logger.info("Loaded fix file. Duration: "+str(duration))
     for fix in fixes["fixes"]:
         writeRiak("write", fix)
+        cnt = cnt + 1
+        if (cnt % 5000) == 0:
+            logger.info("Loaded "+str(cnt)+" fixes!")
 
 def processFile(channel, method, properties, body):
     logger = logging.getLogger("pullfromQueue")
