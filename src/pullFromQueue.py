@@ -114,16 +114,10 @@ def writeRiak(action, fix):
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
-    with open(fname) as fixFile:
-        fixFile.readline()
-        fixFile.readline()   
+    with open(fname) as fixFile: 
         for fix in fixFile:
-            print(fix)
-            print("------")
-            fixed=fix.replace("},","}")
-            print(fixed)
-            fixedJSON = json.loads(fixed)
-            writeRiak("write", fixedJSON)
+            if "vid" in fix:
+                writeRiak("write", json.loads(fix.replace("},","}")))
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
     for fix in fixes["fixes"]:
@@ -248,10 +242,10 @@ def main(argv):
         elif opt in ("-q", "--queue"):
             queue=arg
 
-#    toRiakIndividual('/tmp/20150212.json')
-    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
-    gChannel.start_consuming()
-    gConnection.close()
+    toRiakIndividual('/tmp/20150212.json')
+#    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
+ #   gChannel.start_consuming()
+ #   gConnection.close()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
