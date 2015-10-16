@@ -118,6 +118,8 @@ def toRiakIndividual(fname):
         next(fixFile)
         next(fixFile)    
         for fix in fixFile:
+            print(fix)
+            print("------")
             fixed=fix.replace("},","}")
             print(fixed)
             fixedJSON = json.loads(fixed)
