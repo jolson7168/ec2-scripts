@@ -127,7 +127,7 @@ def processFile(channel, method, properties, body):
     fileInfo=json.loads(body)
     logger.info("Working: "+fileInfo["bucket"]+" "+fileInfo["filename"])
     thisfile = getFile(fileInfo["bucket"], fileInfo["filename"])
-    unzipFIle(thisFile)
+    unzipFile(thisFile)
     toRiak(thisFile)
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
