@@ -114,6 +114,7 @@ def writeRiak(action, fix):
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
+    print(fname)
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
