@@ -144,7 +144,7 @@ def processFile(channel, method, properties, body):
     logger.info("Working: "+fileInfo["bucket"]+" "+fileInfo["filename"])
     thisFile = getFile(fileInfo["bucket"], fileInfo["filename"])
     unzipFile(thisFile)
-    toRiakIndividual(thisFile)
+    toRiakIndividual(thisFile.replace(".zip",".json"))
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
 def configureMsgConsumer(server, queue_to_process, login, password, callback_func):
