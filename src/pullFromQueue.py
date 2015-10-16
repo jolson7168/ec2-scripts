@@ -120,7 +120,7 @@ def toRiakIndividual(fname):
             if "vid" in fix:
                 writeRiak("write", json.loads(fix.replace("},","}")))
                 cnt = cnt + 1
-                if cnt % 10000 == 0:
+                if cnt % 500 == 0:
                     logger.info("Loaded "+str(cnt)+" fixes!")
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
