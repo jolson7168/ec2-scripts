@@ -126,7 +126,7 @@ def processFile(channel, method, properties, body):
     logger = logging.getLogger("pullfromQueue")
     fileInfo=json.loads(body)
     logger.info("Working: "+fileInfo["bucket"]+" "+fileInfo["filename"])
-    thisfile = getFile(fileInfo["bucket"], fileInfo["filename"])
+    thisFile = getFile(fileInfo["bucket"], fileInfo["filename"])
     unzipFile(thisFile)
     toRiak(thisFile)
     channel.basic_ack(delivery_tag=method.delivery_tag)
