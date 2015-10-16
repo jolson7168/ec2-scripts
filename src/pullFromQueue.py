@@ -114,9 +114,11 @@ def writeRiak(action, fix):
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
-    with open(fname) as fixFile:    
+    with open(fname) as fixFile:
+        next(fixFile)
+        next(fixFile)    
         for fix in fixFile:
-            writeRiak("write", json.loads(fix))
+            writeRiak("write", json.loads(fix.replace("},","}")))
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
     for fix in fixes["fixes"]:
