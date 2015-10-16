@@ -138,7 +138,7 @@ def toRiak(fname):
     for fix in fixes["fixes"]:
         writeRiak("write", fix)
         cnt = cnt + 1
-        if (cnt % 5000) == 0:
+        if (cnt % 50000) == 0:
             logger.info("Loaded "+str(cnt)+" fixes!")
 
 def processFile(channel, method, properties, body):
