@@ -117,6 +117,9 @@ def toRiakIndividual(fname):
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
+                print(fix)
+                print("---")
+                print(fix.replace("},","}"))
                 writeRiak("write", json.loads(fix.replace("},","}")))
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
@@ -127,7 +130,7 @@ def toRiakIndividual(fname):
 def toRiak(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
-    with open(fname) as data_file:    
+    with open(fname) as data_file:
         fixes = json.loads(data_file)
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file. Duration: "+str(duration))
