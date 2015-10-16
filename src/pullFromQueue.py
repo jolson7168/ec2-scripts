@@ -79,7 +79,7 @@ def toInteger(tmstmp):
 def writeRiak(action, fix):
     global riak
 
-    logger = logging.getLogger("pullfromQueue")
+    #logger = logging.getLogger("pullfromQueue")
     bucketname = str(fix["vid"])
     key = str(toInteger(fix["tmstmp"]))
     bucket = riak.bucket(bucketname)
@@ -87,21 +87,21 @@ def writeRiak(action, fix):
         obj = RiakObject(riak, bucket, key)
         obj.content_type = "application/json"
         obj.data = fix
-        index = None
-        if index is not None:
-                for indexKey in index:
-                    try:
-                        obj.add_index(indexKey,index[indexKey])
-                    except Exception as e:
-                        logger.error("Error updating index: "+e.message)
-        startTime = time.time()
+        #index = None
+        #if index is not None:
+        #        for indexKey in index:
+        #            try:
+        #                obj.add_index(indexKey,index[indexKey])
+        #            except Exception as e:
+         #               logger.error("Error updating index: "+e.message)
+        #startTime = time.time()
         storedObj = obj.store()
-        duration = round((time.time() - startTime),3)
-        if storedObj is not None:
-            results = storedObj.key
-        else:
-            results = "Not stored!"
-        logger.info(" Write "+bucketname+"/"+key+" Sz: "+str(len(json.dumps(fix)))+" Dur: "+str(duration)+" Results: "+results)
+        #duration = round((time.time() - startTime),3)
+        #if storedObj is not None:
+        #    results = storedObj.key
+        #else:
+        #    results = "Not stored!"
+        #logger.info(" Write "+bucketname+"/"+key+" Sz: "+str(len(json.dumps(fix)))+" Dur: "+str(duration)+" Results: "+results)
     elif action == "delete":
         got = bucket.get(key)
         startTime = time.time()
@@ -113,11 +113,15 @@ def writeRiak(action, fix):
 
 def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
+    cnt = 0
     startTime = time.time()
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
                 writeRiak("write", json.loads(fix.replace("},","}")))
+                cnt = cnt + 1
+                if cnt % 50000 == 0:
+                    logger.info("Loaded "+str(cnt)+" fixes!")
     duration = round((time.time() - startTime),3)   
     logger.info("Loaded fix file individually. Duration: "+str(duration))
     for fix in fixes["fixes"]:
