@@ -128,6 +128,8 @@ def toRiakIndividual(fname):
     logger = logging.getLogger("pullfromQueue")
     startTime = time.time()
     cnt=0
+    if not os.path.isfile(fname):
+        fname = fname.replace("/tmp/","/tmp/home/ec2-user/git/ctaTracker/data/")
     with open(fname) as fixFile: 
         for fix in fixFile:
             if "vid" in fix:
