@@ -321,9 +321,9 @@ def main(argv):
     riak = configureRiak(cluster, "8087")
 
 
-#    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
-#    gChannel.start_consuming()
-#    gConnection.close()
+    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
+    gChannel.start_consuming()
+    gConnection.close()
 
 
 
