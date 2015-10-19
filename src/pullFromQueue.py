@@ -44,7 +44,7 @@ def configureRiak(riakIPs, riakPort):
     client = RiakClient(protocol='pbc',nodes=nodes)
     while not connected:
        try:
-            logger.info("Attempting to PING....")
+            logger.info("Attempting to PING: "+json.dumps(nodes))
             client.ping()
             connected = True
        except:
@@ -295,20 +295,18 @@ def getIntervals(theDate):
 def main(argv):
     global riak 
 
-    rightNow = time.strftime("%Y%m%d%H%M%S")
-    logger = initLog(rightNow)
-    riak = configureRiak("104.197.180.179", "8087")
-
     try:
-        opts, args = getopt.getopt(argv,"hslpq:",["server=","login=","password=","queue="])
+        opts, args = getopt.getopt(argv,"hcslpq:",["cluster=","server=","login=","password=","queue="])
     except getopt.GetoptError:
-        print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
+        print ('pullFromQueue.py -c <ip of cluster> -s <ip of queue server> -l <login> -p <password> -q <queue>')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
-            print ('pullFromQueue.py -s <ip of queue server> -l <login> -p <password> -q <queue>')
+            print ('pullFromQueue.py -c <ip of cluster> -s <ip of queue server> -l <login> -p <password> -q <queue>')
             sys.exit()
+        elif opt in ("-c", "--cluster"):
+            cluster=arg
         elif opt in ("-s", "--server"):
             server=arg
         elif opt in ("-l", "--login"):
@@ -318,19 +316,16 @@ def main(argv):
         elif opt in ("-q", "--queue"):
             queue=arg
 
-    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
-    gChannel.start_consuming()
-    gConnection.close()
+    rightNow = time.strftime("%Y%m%d%H%M%S")
+    logger = initLog(rightNow)
+    riak = configureRiak(cluster, "8087")
+
+
+#    gConnection, gChannel = configureMsgConsumer(server, queue, login, password, processFile)
+#    gChannel.start_consuming()
+#    gConnection.close()
 
 
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-        #print("===================================")  
-        #if vid == 800:
-        #    print("vid: "+str(vid))    
-        #    for fixTime in sortedFixes["sortedFixes"]:
-        #        print("   time: "+str(fixTime)+" Length: "+str(len(sortedFixes["sortedFixes"][fixTime])))
-        #        for eachFix in sortedFixes["sortedFixes"][fixTime]:
-        #            print("      fixtime: "+str(eachFix["fixTime"]))
