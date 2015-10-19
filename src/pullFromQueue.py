@@ -297,7 +297,7 @@ def main(argv):
 
     rightNow = time.strftime("%Y%m%d%H%M%S")
     logger = initLog(rightNow)
-    riak = configureRiak("130.211.171.31", "8087")
+    riak = configureRiak("104.197.180.179", "8087")
 
     try:
         opts, args = getopt.getopt(argv,"hslpq:",["server=","login=","password=","queue="])
